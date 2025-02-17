@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <iomanip>
+#include <cmath>  // For rounding
 using namespace std;
 
 int main() {
@@ -18,20 +19,26 @@ int main() {
     cout << "Are you a member of the Premier Club (Y/N)? ";
     cin >> memberStatus;
 
+    // Ensure the price is not negative
+    if (price < 0) {
+        cout << "Price cannot be negative." << endl;
+        return 1; // Exit program if price is negative
+    }
+
     // Determine the discount based on membership status
     if (memberStatus == 'Y' || memberStatus == 'y') {
-        // 10% discount for Premier Club members
-        discount = 0.10;
-    } else {
-        // 5% discount for non-members
+        // 5% discount for Premier Club members
         discount = 0.05;
+    } else {
+        // 10% discount for non-members
+        discount = 0.10;
     }
 
     // Calculate the total after applying the discount
     total = price - (price * discount);
 
-    // Round the total to 2 decimal places manually to handle cases like 119.745
-    total = static_cast<int>(total * 100 + 0.5) / 100.0;
+    // Round the total to 2 decimal places
+    total = round(total * 100) / 100.0;
 
     // Display the total amount owed, formatted to 2 decimal places
     cout << fixed << setprecision(2) << "Total amount owed: $" << total << endl;
