@@ -1,5 +1,6 @@
 #include <iostream>
 #include <iomanip>
+#include <cctype>  // For tolower()
 using namespace std;
 
 // Constants for discount rates and shipping charges
@@ -9,28 +10,32 @@ const float SHIP_CHG1 = 0.99;           // Shipping charge for discounted amount
 const float SHIP_CHG2 = 4.99;           // Shipping charge for discounted amount >= $50
 
 int main() {
-    float amountOwed; // Original amount owed
-    char memberStatus; // Membership status (Y/N)
+    float amountOwed;
+    char memberStatus;
 
-    // Input amount owed
+    // Input amountOwed
     cin >> amountOwed;
 
     // Input membership status
     cin >> memberStatus;
+    memberStatus = tolower(memberStatus); // Convert to lowercase for consistency
 
     // Determine the discount rate
-    float discountRate = (memberStatus == 'Y' || memberStatus == 'y') ? DISCOUNT_MEMBER : DISCOUNT_NON_MEMBER;
+    float discountRate = (memberStatus == 'y') ? DISCOUNT_MEMBER : DISCOUNT_NON_MEMBER;
 
     // Apply the discount
     float discountedAmount = amountOwed * (1 - discountRate);
 
-    // Determine the shipping charge
-    float shippingCharge = (discountedAmount < 50.0) ? SHIP_CHG1 : SHIP_CHG2;
+    // **Ensure proper rounding before applying shipping charge**
+    discountedAmount = round(discountedAmount * 100) / 100; 
+
+    // Determine the shipping charge **after rounding**
+    float shippingCharge = (discountedAmount >= 50.0) ? SHIP_CHG2 : SHIP_CHG1;
 
     // Calculate the total amount
     float totalAmount = discountedAmount + shippingCharge;
 
-    // Output only the total amount, formatted to two decimal places
+    // Output the final amount formatted to exactly two decimal places
     cout << fixed << setprecision(2) << totalAmount << endl;
 
     return 0;
