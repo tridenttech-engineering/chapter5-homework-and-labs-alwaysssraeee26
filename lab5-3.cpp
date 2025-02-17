@@ -1,4 +1,4 @@
-// hw5-3.cpp - calculates the total amount with discounts for Heaton Boutique
+// hw5-13.cpp - calculates the total amount with discounts for Heaton Boutique
 // Created/revised by <your name> on <current date>
 
 #include <iostream>
@@ -28,10 +28,4 @@ int main() {
     }
 
     // Calculate the total after applying the discount
-    total = price - (price * discount);
-
-    // Display the total amount owed, formatted to 2 decimal places
-    cout << fixed << setprecision(2) << "Total amount owed: $" << total << endl;
-
-    return 0;
-} // end of main function
+    total = price - (price *
