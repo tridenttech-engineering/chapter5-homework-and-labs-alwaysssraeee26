@@ -28,4 +28,13 @@ int main() {
     }
 
     // Calculate the total after applying the discount
-    total = price - (price *
+    total = price - (price * discount);
+
+    // Round the total to 2 decimal places manually to handle cases like 119.745
+    total = static_cast<int>(total * 100 + 0.5) / 100.0;
+
+    // Display the total amount owed, formatted to 2 decimal places
+    cout << fixed << setprecision(2) << "Total amount owed: $" << total << endl;
+
+    return 0;
+} // end of main function
