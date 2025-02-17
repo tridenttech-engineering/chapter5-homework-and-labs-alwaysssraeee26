@@ -1,45 +1,37 @@
+// hw5-3.cpp - calculates the total amount with discounts for Heaton Boutique
+// Created/revised by <your name> on <current date>
+
 #include <iostream>
 #include <iomanip>
-#include <cctype>  // For tolower()
 using namespace std;
 
-// Constants for discount rates and shipping charges
-const float DISCOUNT_MEMBER = 0.10;     // 10% discount for members
-const float DISCOUNT_NON_MEMBER = 0.05; // 5% discount for non-members
-const float SHIP_CHG1 = 0.99;           // Shipping charge for discounted amount < $50
-const float SHIP_CHG2 = 4.99;           // Shipping charge for discounted amount >= $50
-
 int main() {
-		float amountOwed;
-		char memberStatus;
+    // Declare variables for price, discount percentage, and membership status
+    float price, discount, total;
+    char memberStatus;
 
-		// Input amountOwed
-		cin >> amountOwed;
+    // Get the price of the item
+    cout << "Enter the price of the item: $";
+    cin >> price;
 
-		// Input membership status
-		cin >> memberStatus;
-		memberStatus = tolower(memberStatus); // Convert to lowercase for consistency
+    // Get the membership status (Y for Yes, N for No)
+    cout << "Are you a member of the Premier Club (Y/N)? ";
+    cin >> memberStatus;
 
-		// Determine the discount rate
-		float discountRate = (memberStatus == 'y') ? DISCOUNT_MEMBER : DISCOUNT_NON_MEMBER;
+    // Determine the discount based on membership status
+    if (memberStatus == 'Y' || memberStatus == 'y') {
+        // 10% discount for Premier Club members
+        discount = 0.10;
+    } else {
+        // 5% discount for non-members
+        discount = 0.05;
+    }
 
-		// Apply the discount
-		float discountedAmount = amountOwed * (1 - discountRate);
+    // Calculate the total after applying the discount
+    total = price - (price * discount);
 
-		// **Ensure proper rounding before applying shipping charge**
-		discountedAmount = (discountedAmount * 100) / 100; 
+    // Display the total amount owed, formatted to 2 decimal places
+    cout << fixed << setprecision(2) << "Total amount owed: $" << total << endl;
 
-		// Determine the shipping charge **after rounding**
-		float shippingCharge = (discountedAmount >= 50.0) ? SHIP_CHG2 : SHIP_CHG1;
-
-		// Calculate the total amount
-		float totalAmount = discountedAmount + shippingCharge;
-
-		// Output the final amount formatted to exactly two decimal places
-		cout << fixed << setprecision(2) << totalAmount << endl;
-
-		return 0;
-}
-
-
-
+    return 0;
+} // end of main function
