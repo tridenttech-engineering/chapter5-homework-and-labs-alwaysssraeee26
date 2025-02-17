@@ -1,47 +1,46 @@
-// hw5-13.cpp - calculates the total amount with discounts for Heaton Boutique
+// Lab5-3.cpp - displays the total amount due
 // Created/revised by <your name> on <current date>
 
 #include <iostream>
 #include <iomanip>
-#include <cmath>  // For rounding
+#include <cctype> 
+
 using namespace std;
 
-int main() {
-    // Declare variables for price, discount percentage, and membership status
-    float price, discount, total;
-    char memberStatus;
+int main()
+{
+    const double MEMBER_DISCOUNT = 0.1; // 10% discount for Premier Club members
+    const double NON_MEMBER_DISCOUNT = 0.05; // 5% discount for all other customers
+    const double SHIP_CHG1 = 0.99;
+    const double SHIP_CHG2 = 4.99;
 
-    // Get the price of the item
-    cout << "Enter the price of the item: $";
-    cin >> price;
+    double amtOwed = 0.0;
+    char member = ' ';
 
-    // Get the membership status (Y for Yes, N for No)
-    cout << "Are you a member of the Premier Club (Y/N)? ";
-    cin >> memberStatus;
+    // Enter input items
+    cout << "Amount owed before any discount and shipping: ";
+    cin >> amtOwed;
 
-    // Ensure the price is not negative
-    if (price < 0) {
-        cout << "Price cannot be negative." << endl;
-        return 1; // Exit program if price is negative
-    }
+    cout << "Premier Club member (Y/N)? ";
+    cin >> member;
 
-    // Determine the discount based on membership status
-    if (memberStatus == 'Y' || memberStatus == 'y') {
-        // 5% discount for Premier Club members
-        discount = 0.05;
+    // Apply discount
+    if (toupper(member) == 'Y') {
+        amtOwed -= amtOwed * MEMBER_DISCOUNT;
     } else {
-        // 10% discount for non-members
-        discount = 0.10;
+        amtOwed -= amtOwed * NON_MEMBER_DISCOUNT;
     }
 
-    // Calculate the total after applying the discount
-    total = price - (price * discount);
+    // Add shipping
+    if (amtOwed >= 100.0) {
+        amtOwed += SHIP_CHG1;
+    } else {
+        amtOwed += SHIP_CHG2;
+    }
 
-    // Round the total to 2 decimal places
-    total = round(total * 100) / 100.0;
-
-    // Display the total amount owed, formatted to 2 decimal places
-    cout << fixed << setprecision(2) << "Total amount owed: $" << total << endl;
+    // Display final amount owed
+    cout << fixed << setprecision(2);
+    cout << "Amount owed after any discount and shipping: " << amtOwed << endl;
 
     return 0;
-} // end of main function
+} 
