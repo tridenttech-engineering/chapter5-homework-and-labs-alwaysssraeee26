@@ -1,6 +1,3 @@
-// lab5-3.cpp - Displays the total amount due
-// Created/revised by <your name> on <current date>
-
 #include <iostream>
 #include <iomanip>
 using namespace std;
@@ -12,46 +9,29 @@ const float SHIP_CHG1 = 0.99;           // Shipping charge for discounted amount
 const float SHIP_CHG2 = 4.99;           // Shipping charge for discounted amount >= $50
 
 int main() {
-    float amountOwed, discountRate, discountedAmount, totalAmount;
-    char memberStatus;
+    float amountOwed; // Original amount owed
+    char memberStatus; // Membership status (Y/N)
 
-    // Prompt the user for the amount owed
-    cout << "Enter the amount owed: ";
+    // Input amount owed
     cin >> amountOwed;
 
-    // Prompt the user for membership status
-    cout << "Is the customer a Premier Club member? (Y/N): ";
+    // Input membership status
     cin >> memberStatus;
 
-    // Validate membership status input
-    if (memberStatus != 'Y' && memberStatus != 'y' && memberStatus != 'N' && memberStatus != 'n') {
-        cout << "Invalid membership status. Please enter 'Y' or 'N'." << endl;
-        return 1; // Exit program with an error
-    }
-
     // Determine the discount rate
-    if (memberStatus == 'Y' || memberStatus == 'y') {
-        discountRate = DISCOUNT_MEMBER;
-    } else {
-        discountRate = DISCOUNT_NON_MEMBER;
-    }
+    float discountRate = (memberStatus == 'Y' || memberStatus == 'y') ? DISCOUNT_MEMBER : DISCOUNT_NON_MEMBER;
 
     // Apply the discount
-    discountedAmount = amountOwed * (1 - discountRate);
+    float discountedAmount = amountOwed * (1 - discountRate);
 
     // Determine the shipping charge
     float shippingCharge = (discountedAmount < 50.0) ? SHIP_CHG1 : SHIP_CHG2;
 
     // Calculate the total amount
-    totalAmount = discountedAmount + shippingCharge;
+    float totalAmount = discountedAmount + shippingCharge;
 
-    // Display the results
-    cout << fixed << setprecision(2); // Format output to two decimal places
-    cout << "Original Amount: $" << amountOwed << endl;
-    cout << "Discount Rate: " << (discountRate * 100) << "%" << endl;
-    cout << "Discounted Amount: $" << discountedAmount << endl;
-    cout << "Shipping Charge: $" << shippingCharge << endl;
-    cout << "Total Amount Due: $" << totalAmount << endl;
+    // Output only the total amount, formatted to two decimal places
+    cout << fixed << setprecision(2) << totalAmount << endl;
 
-    return 0; // Indicate successful program execution
+    return 0;
 }
